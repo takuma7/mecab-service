@@ -3,11 +3,19 @@ require 'uri'
 class HomeController < ApplicationController
   def index
     nm = Natto::MeCab.new
+    @words_list = []
+    @message = ''
     if params.has_key?(:text) then
       # @result = nm.parse(params[:text])
-      @tweets = $twitter.user_timeline(params[:text],
-          {count: 200, include_rts: false}
-        ).map{|t| t.text}
+      begin
+        @tweets = $twitter.user_timeline(params[:text],
+            {count: 200, include_rts: false}
+          ).map{|t| t.text}
+      rescue Exception => e
+        @tweets = []
+        @message = "Invalid User Name"
+        return
+      end
       @parsed_tweets = @tweets.map{|t|
         _t = t.gsub(/@[A-Za-z0-9_]+/, '')
               .gsub(URI.regexp, '')
