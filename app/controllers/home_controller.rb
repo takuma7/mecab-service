@@ -5,10 +5,10 @@ class HomeController < ApplicationController
     nm = Natto::MeCab.new
     @words_list = []
     @message = ''
-    if params.has_key?(:text) then
+    if params.has_key?(:twitter_id) then
       # @result = nm.parse(params[:text])
       begin
-        @tweets = $twitter.user_timeline(params[:text],
+        @tweets = $twitter.user_timeline(params[:twitter_id],
             {count: 200, include_rts: false}
           ).map{|t| t.text}
       rescue Exception => e
