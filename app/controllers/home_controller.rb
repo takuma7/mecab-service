@@ -40,6 +40,7 @@ class HomeController < ApplicationController
       @maxSize = 100
       @minSize = 10
       def scaleSize(x)
+        return @minSize if (@maxCount - @minCount)==0
         @minSize + (x-@minCount)/(@maxCount-@minCount)*(@maxSize-@minSize)
       end
       @words_list = @words_list_tmp.inject({}){|a,(k,v)| a[k]=scaleSize(v);a}

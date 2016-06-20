@@ -15,14 +15,14 @@
 <div id="word_cloud" style="margin-top: 2em;">
 </div>
 <script>
-var width = $(window).width();
+var width = $(window).width() < $(window).height() ? $(window).width() : $(window).height();
 var height = width;
 
 var words = [
   <% @words_list.each do |word, size| %>
   {
     text: "<%= word %>",
-    size: <%= size %> * 2
+    size: <%= size %>
   },
   <% end %>
 ];
